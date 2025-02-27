@@ -1,5 +1,5 @@
 
-const listaAmigos=[];
+const listaAmigos=JSON.parse(localStorage.getItem('listaAmigos')) || [];
 
 function agregarAmigos(){
     let amigo=document.getElementById('inputAmigo').value;
@@ -18,15 +18,18 @@ function agregarAmigos(){
     listaAmigos.push(amigo);
    document.getElementById('inputAmigo').value='';
 
+   //guardar la lista actualizada en el localstorage
+   localStorage.setItem('listaAmigos', JSON.stringify(listaAmigos));
+
    console.log(listaAmigos);
 
    mostrarAmigos();
 }
 
 function mostrarAmigos(){
-    //
-let elemento=document.getElementById('textarea');
-    //
+    
+    let elemento=document.getElementById('textarea');
+    
      // Usar map para transformar cada elemento y luego unirlos con un guion
      elemento.value = listaAmigos
      .map((amigo) => `- ${amigo}`) // Añade un guion antes de cada amigo
@@ -42,9 +45,12 @@ function actualizarListaDesdeTextarea() {
         .map((linea) => linea.trim().replace(/^- /, '')) // Elimina el guion y espacios
         .filter((amigo) => amigo !== ''); // Filtra líneas vacías
 
-    // Actualizar la lista de amigos
-    listaAmigos.length = 0; // Vaciar la lista actual
+
+    listaAmigos.length = 0; 
     listaAmigos.push(...nuevosAmigos); // Agregar los nuevos amigos
+
+    // Guardar la lista actualizada en localStorage
+    localStorage.setItem('listaAmigos', JSON.stringify(listaAmigos));
     console.log('Lista actualizada:', listaAmigos);
 }
 
@@ -54,24 +60,36 @@ function sortearAmigos(){
         alert('Ingrese al menos 4 amigos para sortear');
         return;
     }
-    // Ocultar el resultado anterior
-    amigoSecreto.textContent = '?';
+   // Mostrar el spinner
+   amigoSecreto.innerHTML = `
+   <div class="spinner-grow text-primary" role="status">
+       <span class="visually-hidden">Cargando...</span>
+   </div>
+`;
 
-    // Mostrar el spinner
-    spinner.classList.remove('d-none');
+// Simular una operación de carga (5 segundos)
+setTimeout(() => {
+   const amigoClave = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
+   const amigoClaveMayus = amigoClave.toUpperCase();
 
-    // Simular una operación de carga (5 segundos)
-    setTimeout(() => {
-        const amigoClave = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
-        const amigoClaveMayus = amigoClave.toUpperCase();
-
-        // Ocultar el spinner
-        spinner.classList.add('d-none');
-
-        // Mostrar el resultado
-        amigoSecreto.textContent = amigoClaveMayus;
-    }, 5000); // 5 segundos de simulación de carga
+   // Mostrar el resultado
+   amigoSecreto.textContent = amigoClaveMayus;
+}, 4000); // 4 segundos de simulación de carga
 }
+
+function nuevoSorteo(){
+    listaAmigos.length=0;
+    localStorage.removeItem('listaAmigos');
+    //limpiar   del  DOM
+    document.getElementById('textarea').value='';
+    document.getElementById('inputAmigo').value='';
+    document.getElementById('amigoSecreto').textContent='?';
+}
+
+//CARGAR LA LISTA AL INICIAR LA PAGINA
+window.addEventListener('load', ()=>{
+    mostrarAmigos();
+})
 
 // EVENT LISTENER para detectar "Enter" en el input
 document.getElementById('inputAmigo').addEventListener('keydown', function (e) {

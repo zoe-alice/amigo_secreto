@@ -27,3 +27,28 @@
     font-weight: bold;
     margin-top: 20px;
 }
+div #amigoSecreto{
+font-weight: 500;
+font-size: 4rem;
+color: red;
+}
+/* Banner */
+.header-banner {
+    flex: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+}
+.header-banner img{
+    height: 200px;
+}
+
+/* Títulos */
+.main-title {
+    font-size: 48px;
+    font-family: "Merriweather", serif;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-white);
+}

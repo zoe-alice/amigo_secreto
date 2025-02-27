@@ -4,42 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario con Textarea Estilizado</title>
-    <!-- Bootstrap CSS -->
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos personalizados -->
+  
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-dark text-white">
     <div class="container mt-5 ">
+        <header class="header-banner">
+            <h1 class="main-title">Amigo Secreto</h1>
+            <img src="img/amigo-secreto.png" alt="Imagen representativa de amigo secreto">
+        </header>
         <div class="row justify-content-center">
             <div class="col-md-6 ">
                 <form>
-                    <!-- Input con botón al costado -->
+                    
                     <div class="input-group mb-3">
-                        <input id="inputAmigo" type="text" class="form-control" placeholder="Escribe algo...">
+                        <input id="inputAmigo" type="text" class="form-control" placeholder="Escriba un nombre">
                         <button class="btn btn-primary" type="button" onclick="agregarAmigos()">Buscar</button>
                     </div>
 
-                    <!-- Textarea con estilo de líneas -->
+                 
                     <div class="form-group mb-3">
                         <label for="textarea">Lista de Amigos:</label>
-                        <textarea id="textarea" class="form-control lined-textarea" rows="10" placeholder="Escribe tus notas aquí..."></textarea>
+                        <textarea id="textarea" class="form-control lined-textarea" rows="8" ></textarea>
                     </div>
 
-                    <!-- Botones en la parte inferior -->
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-success"  onclick="sortearAmigos() ">Ver mi amigo secreto</button>
-                        <button type="button" class="btn btn-warning">Crear nuevo sorteo</button>
+                 
+                    <div class="d-flex flex-column flex-sm-row gap-2">
+                        <button type="button" class="btn btn-success w-100 w-sm-auto" onclick="sortearAmigos()">Ver mi amigo secreto</button>
+                        <button type="button" class="btn btn-warning w-100 w-sm-auto" onclick="nuevoSorteo()">Crear nuevo sorteo</button>
                     </div>
                 </form>
-                <!-- Contenedor para el resultado y el spinner -->
+                
         <div class="mt-4 ">
             <h3 class="text-center">TU AMIGO SECRETO ES: </h3>
-            <label class="text-center d-block display-3 p-3 mb-2 bg-success text-white" for="amigo" id="amigoSecreto">?</label>
-            <!-- Spinner -->
-            <div id="spinner" class="spinner-grow text-primary d-none" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+           
+            
+            <span id="amigoSecreto" class="d-block mt-3 text-center"></span>
         </div>
             </div>
             
@@ -48,9 +50,22 @@
 
     </div>
 
-    <!-- Bootstrap JS (opcional, si necesitas funcionalidades de Bootstrap) -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="script.js"></script>
+    <script>
+        window.watsonAssistantChatOptions = {
+          integrationID: "5262aa2a-dc40-4ce3-a46c-99e93ce69ec2", // The ID of this integration.
+          region: "au-syd", // The region your integration is hosted in.
+          serviceInstanceID: "5f2e3457-f7e6-41c3-ab99-9f8a0f0fc035", // The ID of your service instance.
+          onLoad: async (instance) => { await instance.render(); }
+        };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+          document.head.appendChild(t);
+        });
+      </script>
 </body>
 </html>
